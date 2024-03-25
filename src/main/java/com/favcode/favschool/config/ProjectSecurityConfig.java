@@ -1,6 +1,7 @@
 package com.favcode.favschool.config;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,23 +24,23 @@ public class ProjectSecurityConfig {
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
         http.csrf((csrf) -> csrf.ignoringRequestMatchers(mvcMatcherBuilder.pattern("/saveMsg"))
-                .ignoringRequestMatchers(PathRequest.toH2Console()))
-                        .authorizeHttpRequests((requests) -> requests.requestMatchers("/dashboard").authenticated()
-                        .requestMatchers( "/", "home").permitAll()
+                        .ignoringRequestMatchers(PathRequest.toH2Console()))
+                .authorizeHttpRequests((requests) -> requests.requestMatchers("/dashboard").authenticated()
+                        .requestMatchers("/", "home").permitAll()
                         .requestMatchers("/holidays/**").permitAll()
                         .requestMatchers("/contact").permitAll()
                         .requestMatchers("/saveMsg").permitAll()
                         .requestMatchers("/courses").permitAll()
                         .requestMatchers("/about").permitAll()
+                        .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/logout").permitAll()
-                        .requestMatchers(PathRequest.toH2Console()).permitAll()
-                        .requestMatchers("/assets/**").permitAll())
-                        .formLogin(loginConfigurer -> loginConfigurer.loginPage("/login")
-                            .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll())
-                        .logout(logoutConfigurer -> logoutConfigurer.logoutSuccessUrl("/login?logout=true")
-                            .invalidateHttpSession(true).permitAll())
-                        .httpBasic(Customizer.withDefaults());
+                        .requestMatchers(PathRequest.toH2Console()).permitAll())
+                .formLogin(loginConfigurer -> loginConfigurer.loginPage("/login")
+                        .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll())
+                .logout(logoutConfigurer -> logoutConfigurer.logoutSuccessUrl("/login?logout=true")
+                        .invalidateHttpSession(true).permitAll())
+                .httpBasic(Customizer.withDefaults());
         http.headers(headersConfigurer -> headersConfigurer
                 .frameOptions(frameOptionsConfig -> frameOptionsConfig.disable()));
 
@@ -47,7 +48,8 @@ public class ProjectSecurityConfig {
     }
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsServices(){
+    public InMemoryUserDetailsManager userDetailsService() {
+
         UserDetails user = User.withDefaultPasswordEncoder()
                 .username("user")
                 .password("12345")
@@ -55,11 +57,10 @@ public class ProjectSecurityConfig {
                 .build();
         UserDetails admin = User.withDefaultPasswordEncoder()
                 .username("admin")
-                .password("19230")
-                .roles("USER","ADMIN")
+                .password("54321")
+                .roles("ADMIN")
                 .build();
-
-        return new InMemoryUserDetailsManager(user,admin);
+        return new InMemoryUserDetailsManager(user, admin);
     }
 
 }
