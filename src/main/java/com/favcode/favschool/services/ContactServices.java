@@ -1,24 +1,14 @@
 package com.favcode.favschool.services;
 
 import com.favcode.favschool.constants.FavSchoolConstants;
-import com.favcode.favschool.controller.ContactController;
 import com.favcode.favschool.model.Contact;
 import com.favcode.favschool.repository.ContactRepository;
-import jakarta.validation.Valid;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.annotation.ApplicationScope;
-import org.springframework.web.context.annotation.RequestScope;
-import org.springframework.web.context.annotation.SessionScope;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -44,5 +34,19 @@ public class ContactServices {
             isSaved = true;
         }
         return isSaved;
+    }
+
+    public List<Contact> findMsgsWithOpenStatus() {
+        List<Contact> contactMsgs = contactRepository.findMsgsWithStatus(FavSchoolConstants.OPEN);
+        return contactMsgs;
+    }
+
+    public boolean updateMsgStatus(int contactId, String updatedBy) {
+        boolean isUpdated = false;
+        int result = contactRepository.updateMsgStatus(contactId,FavSchoolConstants.CLOSE,updatedBy);
+        if (result>0){
+            isUpdated = true;
+        }
+        return isUpdated;
     }
 }

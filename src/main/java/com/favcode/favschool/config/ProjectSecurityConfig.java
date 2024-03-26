@@ -20,12 +20,13 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class ProjectSecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
-        // Permit All Requests inside the Web Application
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
         http.csrf((csrf) -> csrf.ignoringRequestMatchers(mvcMatcherBuilder.pattern("/saveMsg"))
                         .ignoringRequestMatchers(PathRequest.toH2Console()))
                 .authorizeHttpRequests((requests) -> requests.requestMatchers("/dashboard").authenticated()
+                        .requestMatchers("/displayMessages").hasRole("ADMIN")
+                        .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                         .requestMatchers("/", "home").permitAll()
                         .requestMatchers("/holidays/**").permitAll()
                         .requestMatchers("/contact").permitAll()
@@ -41,6 +42,7 @@ public class ProjectSecurityConfig {
                 .logout(logoutConfigurer -> logoutConfigurer.logoutSuccessUrl("/login?logout=true")
                         .invalidateHttpSession(true).permitAll())
                 .httpBasic(Customizer.withDefaults());
+
         http.headers(headersConfigurer -> headersConfigurer
                 .frameOptions(frameOptionsConfig -> frameOptionsConfig.disable()));
 
