@@ -27,3 +27,8 @@ INSERT INTO `roles` (`role_name`,`created_at`, `created_by`)
 
 INSERT INTO `roles` (`role_name`,`created_at`, `created_by`)
   VALUES ('STUDENT',CURDATE(),'DBA');
+
+DELETE FROM person where email='admin@favschool.com';
+
+INSERT INTO `person` (`name`,`email`,`mobile_number`,`pwd`,`role_id`,`created_at`, `created_by`)
+  VALUES ('Admin','admin@favschool.com','7062939485','$2a$10$XhU4UcSxDPb5G0I0fT/CZ.Lfj2VW2fkLkUP5cOEM.xM8EzyUQXaD2', 1 ,CURDATE(),'DBA');
