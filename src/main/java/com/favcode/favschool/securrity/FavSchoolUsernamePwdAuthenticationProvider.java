@@ -32,7 +32,7 @@ public class FavSchoolUsernamePwdAuthenticationProvider implements Authenticatio
         String pwd = authentication.getCredentials().toString();
         Person person = personRepository.readByEmail(email);
         if (null != person && person.getPersonId() > 0 && passwordEncoder.matches(pwd,person.getPwd())){
-            return new UsernamePasswordAuthenticationToken(person.getName(),null,
+            return new UsernamePasswordAuthenticationToken(email,null,
                     getGrantedAuthorities(person.getRoles()));
         }else {
             throw new BadCredentialsException("Invalid Credentials");
