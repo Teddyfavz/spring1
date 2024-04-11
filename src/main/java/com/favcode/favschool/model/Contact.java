@@ -14,6 +14,7 @@ This makes our code short and clean.*/
 @Data
 @Entity
 @Table(name = "contact_msg")
+
 public class Contact extends BaseEntity {
 
     @Id
