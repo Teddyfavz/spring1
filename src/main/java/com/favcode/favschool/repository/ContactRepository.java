@@ -30,5 +30,5 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
     @Transactional
     @Modifying
     @Query("UPDATE Contact c SET c.status = ?1 WHERE c.contactId = ?2")
-    int updateStautsById(String status, int id);
+    int updateStatusById(String status, int id);
 }

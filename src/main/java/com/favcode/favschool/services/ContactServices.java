@@ -11,8 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Slf4j
 @Service
 public class ContactServices {
@@ -48,7 +46,7 @@ public class ContactServices {
     public boolean updateMsgStatus(int contactId) {
         boolean isUpdated = false;
 
-        int rows = contactRepository.updateStautsById(FavSchoolConstants.CLOSE, contactId);
+        int rows = contactRepository.updateStatusById(FavSchoolConstants.CLOSE, contactId);
         if (rows > 0){
             isUpdated = true;
         }

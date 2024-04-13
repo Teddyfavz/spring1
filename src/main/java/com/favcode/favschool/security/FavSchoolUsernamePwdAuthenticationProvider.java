@@ -1,4 +1,4 @@
-package com.favcode.favschool.securrity;
+package com.favcode.favschool.security;
 
 import com.favcode.favschool.model.Person;
 import com.favcode.favschool.model.Roles;
