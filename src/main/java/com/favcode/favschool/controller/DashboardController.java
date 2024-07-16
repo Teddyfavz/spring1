@@ -26,6 +26,15 @@ public class DashboardController {
             model.addAttribute("enrolledClass", person.getFavClass().getName());
         }
         session.setAttribute("loggedInPerson", person);
+        logMessages();
         return "dashboard.html";
+    }
+
+    private void logMessages() {
+        log.error("Error message from the Dashboard page");
+        log.warn("Warning message from the Dashboard page");
+        log.info("Info message from the Dashboard page");
+        log.debug("Debug message from the Dashboard page");
+        log.trace("Trace message from the Dashboard page");
     }
 }
