@@ -39,7 +39,7 @@ public class ContactServices {
         int pageSize = 7;
         Pageable pageable = PageRequest.of(pageNum-1, pageSize,
                 sortDir.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
-        Page<Contact> msgPage = contactRepository.findByStatus(FavSchoolConstants.OPEN, pageable);
+        Page<Contact> msgPage = contactRepository.findByStatusWithQuery(FavSchoolConstants.OPEN, pageable);
         return msgPage;
     }
 
