@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.favcode.favschool.FavschoolApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.936 s -- in com.favcode.favschool.FavschoolApplicationTests
